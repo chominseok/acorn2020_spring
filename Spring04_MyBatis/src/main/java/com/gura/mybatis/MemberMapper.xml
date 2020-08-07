@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- new > other > mybatis > mybatis xml mapper 로 만듬 -->
+<!-- sql 구문을 여기다 쓴다. -->
+<!-- <mapper namespace="com.gura.mybatis.MemberMapper"> -->
+<mapper namespace="member">
+	<insert id="insert" parameterType="com.gura.Spring04.member.dto.MemberDto">
+		INSERT INTO member
+		(num, name, addr)
+		VALUES
+		(member_seq.NEXTVAL, #{name}. #{addr})
+		<!-- 자동 바인딩 되는 조건은 dto의 필드명과 같아야한다. -->
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM member
+		WHERE num = #{num}   <!-- 굳이 num을 쓰지 않아도 가져온 파라미터가 하나면 아무렇게나 써도 됨 -->
+	</delete>
+	<!-- parameterType : 바인딩 되는 값의 type, 
+		 resultType : (리턴type)어떤 type으로 담아줄 지 결정해줌-->
+	
+	<update id="update" parameterType="com.gura.Spring04.member.dto.MemberDto">
+		UPDATE member
+		SET name = #{name}, addr = #{addr}
+		WHERE num = #{num}
+	</update>
+	
+	<select id="getData" parameterType="int" resultType="com.gura.Spring04.member.dto.MemberDto">
+		SELECT num, name, addr   <!-- selectOne된 row가 resultType(dto)에 담긴다 -->
+		FROM member
+		WHERE num = #{num}	
+	</select>
+	
+	<select id="getList" resultType="com.gura.Spring04.member.dto.MemberDto">
+		SELECT num, name, addr
+		FROM member
+		ORDER BY num ASC
+	</select>
+</mapper>
+

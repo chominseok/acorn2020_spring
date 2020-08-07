@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+	
+<!-- 	<bean id="car1" class="test.auto.Car"/>   car에 기본 생성자가 없어서 이렇게는 만들 수 없다.-->
+	
+	<bean id="e1" class="test.auto.Engine"/>
+	
+	<bean id="car1" class="test.auto.Car">
+		<!--  name :생성자 parameter , 이름  ref : e1에 들어있는 참조값을 참조 -->
+		<constructor-arg name="engine" ref="e1"/> 
+	</bean> 
+	
+	<!-- setter 메소드에 값 넣어주기 -->
+	<bean id="sedan1" class="test.auto.Sedan">
+		<!-- ??? property가 메소드를 호출? 단순히 name에 값을 넣기?  메소드 호출이면showInfo 호출 가능?-->
+		<property name="name" value="스팅어"/>
+		<property name="weight" value="2300"/>
+		<!-- Engine type이기 때문에 engine에는 참조값을 넣어주어야 한다. -->
+		<property name="engine" ref="e1"/>
+	</bean>
+	
+	<!-- 
+		sedan1 = new sedan();
+		sedan1.setName("스팅어");
+		sedan1.setWeight(2300);
+		sedan1.setEngine(e1);
+	 -->
+</beans>
