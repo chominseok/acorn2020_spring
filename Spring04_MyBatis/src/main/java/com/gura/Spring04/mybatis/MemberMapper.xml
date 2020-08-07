@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- new > other > mybatis > mybatis xml mapper 로 만듬 -->
 <!-- sql 구문을 여기다 쓴다. -->
-<!-- <mapper namespace="com.gura.mybatis.MemberMapper"> -->
+
 <mapper namespace="member">
 	<insert id="insert" parameterType="com.gura.Spring04.member.dto.MemberDto">
 		INSERT INTO member
 		(num, name, addr)
 		VALUES
-		(member_seq.NEXTVAL, #{name}. #{addr})
+		(member_seq.NEXTVAL, #{name}, #{addr})
 		<!-- 자동 바인딩 되는 조건은 dto의 필드명과 같아야한다. -->
 	</insert>
 	

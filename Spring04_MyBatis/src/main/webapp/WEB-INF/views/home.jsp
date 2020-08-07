@@ -17,3 +17,17 @@
 	</div>
 </body>
 </html>
+
+<!-- 
+client .do >>     tomcat webserver > [dispacher servlet]
+    l   						<1 , 2 .... 순서에 상관 없이 교차해서, 여러개 사용 가능>
+	l						controller1 service1 dao1
+	l						
+	l						controller2 service2 dao2
+	l							l
+	l		forward				l
+	ㅡㅡㅡ<	viewpage		<ㅡㅡㅡl
+			(xxx.jsp)
+
+			or redirect
+ -->

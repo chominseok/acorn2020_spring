@@ -13,7 +13,7 @@ import com.gura.Spring04.member.dto.MemberDto;
 public class MeberDaoImpl implements MemberDao{
 	//의존 객체 주입받기
 	@Autowired
-	private SqlSession session;
+	private SqlSession session; //sql문을 실행하기 위한 session
 	
 	@Override
 	public void insert(MemberDto dto) {
