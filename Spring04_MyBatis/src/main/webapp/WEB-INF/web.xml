@@ -45,6 +45,6 @@
 	<!-- Spring 인코딩 필터 맵핑하기 -->
 	<filter-mapping>
 		<filter-name>EncodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</filter-mapping>	
 </web-app>

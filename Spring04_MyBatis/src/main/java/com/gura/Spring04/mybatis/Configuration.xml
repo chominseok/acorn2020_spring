@@ -4,9 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
   <!-- mapper의 존재를 알려주는 역할 -->
 <configuration>
+	<!-- mapper에서 쓰는 type들을 별칭을 주어 간편하게 작성 가능하다. -->
+	<typeAliases>
+		<typeAlias type="com.gura.Spring04.member.dto.MemberDto" alias="memberDto"/>
+	</typeAliases>
 	
 	<!--사용할 mapper 목록 설정  -->
 	<mappers>
   		<mapper resource="com/gura/Spring04/mybatis/MemberMapper.xml"/>
+  		<mapper resource="com/gura/Spring04/mybatis/TodoMapper.xml"/>
 	</mappers>
 </configuration>

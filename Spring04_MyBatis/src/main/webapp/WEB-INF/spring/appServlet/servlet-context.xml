@@ -71,8 +71,15 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- component-scan : 하위 패키지를 모두 스캔해서 bean으로 만들 것 들은 bean으로
+	만든 후(그 class 이름으로 객체 생성 후 ) 관리한다.  
+	>> @controller, service, repository, component...등-->
 	<context:component-scan base-package="com.gura.Spring04" />
+	<!-- 임마가 없으면 bean이 안만들어진다. >> spring framework가 안됨 -->
 	
-	
-	
+	<!-- ㅡmultipart 폼 전송 처리를 위한 bean 설정 -->
+	<beans:bean id="multipartResolver" 
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="1024000"/>
+	</beans:bean>
 </beans:beans>

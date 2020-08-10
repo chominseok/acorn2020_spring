@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- new > other > mybatis > mybatis xml mapper 로 만듬 -->
 <!-- sql 구문을 여기다 쓴다. -->
-
+<!--  어노테이션을 붙여주지 않아도 이 xml은 자동적으로 bean에서 관리 -->
 <mapper namespace="member">
-	<insert id="insert" parameterType="com.gura.Spring04.member.dto.MemberDto">
+	<insert id="insert" parameterType="memberDto">
 		INSERT INTO member
 		(num, name, addr)
 		VALUES
@@ -19,19 +19,19 @@
 	<!-- parameterType : 바인딩 되는 값의 type, 
 		 resultType : (리턴type)어떤 type으로 담아줄 지 결정해줌-->
 	
-	<update id="update" parameterType="com.gura.Spring04.member.dto.MemberDto">
+	<update id="update" parameterType="memberDto">
 		UPDATE member
 		SET name = #{name}, addr = #{addr}
 		WHERE num = #{num}
 	</update>
 	
-	<select id="getData" parameterType="int" resultType="com.gura.Spring04.member.dto.MemberDto">
+	<select id="getData" parameterType="int" resultType="memberDto">
 		SELECT num, name, addr   <!-- selectOne된 row가 resultType(dto)에 담긴다 -->
 		FROM member
 		WHERE num = #{num}	
 	</select>
 	
-	<select id="getList" resultType="com.gura.Spring04.member.dto.MemberDto">
+	<select id="getList" resultType="memberDto">
 		SELECT num, name, addr
 		FROM member
 		ORDER BY num ASC
