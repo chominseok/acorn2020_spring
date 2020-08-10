@@ -42,7 +42,8 @@
 			url : "json06.do",
 			method : "get",
 			success : function(data){
-				//data는 plain object or array 이다.
+				//data는 plain object or
+				array 이다.
 				console.log(data);
 				
 				for(var i = 0; i < data.length; i++){
