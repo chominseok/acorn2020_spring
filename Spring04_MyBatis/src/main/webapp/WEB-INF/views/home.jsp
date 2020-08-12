@@ -31,7 +31,15 @@
 		<hr>
 		<h2>file upload test</h2>
 		<form action="upload.do" method="post" enctype="multipart/form-data">
-			<input type="file" name="myFile"/>
+			제목<input type="text" name="title" /><br>
+			첨부파일<input type="file" name="myFile"/><br>
+			<button type="submit">업로드</button>
+		</form>
+		<hr>
+		<h2>file upload test2222222</h2>
+		<form action="upload2.do" method="post" enctype="multipart/form-data">
+			제목<input type="text" name="title" /><br>
+			첨부파일<input type="file" name="myFile"/><br>
 			<button type="submit">업로드</button>
 		</form>
 	</div>
@@ -42,8 +50,7 @@
 			url : "json06.do",
 			method : "get",
 			success : function(data){
-				//data는 plain object or
-				array 이다.
+				//data는 jquery가  {plain object} or [array] 으로 변환해준다.
 				console.log(data);
 				
 				for(var i = 0; i < data.length; i++){
