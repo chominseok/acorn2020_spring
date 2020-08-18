@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.spring05.cafe.dao.CafeCommentDao;
 import com.gura.spring05.cafe.dao.CafeDao;
+import com.gura.spring05.cafe.dto.CafeCommentDto;
 import com.gura.spring05.cafe.dto.CafeDto;
 import com.gura.spring05.exception.NotDeleteException;
 import com.gura.spring05.file.dto.FileDto;
@@ -18,8 +20,8 @@ import com.gura.spring05.file.dto.FileDto;
 
 @Service
 public class CafeServiceImpl  implements CafeService{
-	@Autowired
-	private CafeDao cafeDao;
+	@Autowired private CafeDao cafeDao;
+	@Autowired private CafeCommentDao cafeCommentDao;
 
 	//한 페이지에 나타낼 row 의 갯수
 	final int PAGE_ROW_COUNT=5;
@@ -146,6 +148,11 @@ public class CafeServiceImpl  implements CafeService{
 		
 		//detail로 들어갈 때 조회수가 증가되니까 여기다 작성
 		cafeDao.addViewCount(num);
+		
+		//원글의 글 번호를 이용해서 댓글 목록을 얻어온다.
+		List<CafeCommentDto> commentList = cafeCommentDao.getList(num);
+		//request에 담아준다.
+		request.setAttribute("commentList", commentList);
 	}
 
 	@Override
@@ -177,6 +184,62 @@ public class CafeServiceImpl  implements CafeService{
 	public void update(CafeDto dto) {
 		cafeDao.update(dto);
 	}
+
+	@Override
+	public void saveComment(HttpServletRequest request) {
+		//댓글 작성자
+		String writer = (String)request.getSession().getAttribute("id");
+		//폼 전송되는 댓글의 정보 얻어내기
+		int ref_group = Integer.parseInt(request.getParameter("ref_group"));
+		String target_id = request.getParameter("target_id");
+		String content = request.getParameter("content");
+		/*
+		 * 원글의 댓글은 comment_group 번호가 전송이 안되고
+		 * 리플은 comment_group 번호가 전송이 된다.
+		 * 따라서 null 여부를 조사하면 원글의 댓글인지 리플인지 판단할 수 있다.
+		 * */
+		String comment_group = request.getParameter("comment_group");
+		//새 댓글의 글 번호는 dao를 이용해서 미리 얻어낸다.
+		int seq = cafeCommentDao.getSequence();
+		
+		//저장할 댓글 정보를 dto에 담기
+		CafeCommentDto dto = new CafeCommentDto();
+		dto.setNum(seq);
+		dto.setWriter(writer);
+		dto.setRef_group(ref_group);
+		dto.setTarget_id(target_id);
+		dto.setContent(content);
+		
+		if(comment_group == null) {//원글의 댓글
+			dto.setComment_group(seq);
+		}else {//리플
+			//폼 전송된 comment_group번호를 숫자로 바꿔서 dto에 넣어준다.
+			dto.setComment_group(Integer.parseInt(comment_group));
+		}
+		//댓글 정보를 db에 저장한다.
+		cafeCommentDao.insert(dto);
+		
+	}
+
+	@Override
+	public void deleteComment(HttpServletRequest req) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		//세션에 저장된 로그인 된 아이디
+		String id = (String)req.getSession().getAttribute("id");
+		//댓글의 정보를 얻어와서 댓글이 작성자와같은지 비교한다.
+		String writer = cafeCommentDao.getData(num).getWriter();
+		if(id.equals(writer)) {
+			cafeCommentDao.delete(num);
+		}else {
+			throw new NotDeleteException("삭제할 수 없습니다.");
+		}
+	}
+
+	@Override
+	public void updateComment(CafeCommentDto dto) {
+		cafeCommentDao.update(dto);
+	}
+	
 	
 	
 }

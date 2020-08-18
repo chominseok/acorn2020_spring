@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.spring05.cafe.dto.CafeCommentDto;
 import com.gura.spring05.cafe.dto.CafeDto;
 import com.gura.spring05.cafe.service.CafeService;
 
@@ -43,7 +44,7 @@ public class CafeController {
 		
 		cafeService.insert(dto);
 		m.setViewName("cafe/private/insert");
-		return m;
+		return m; 
 	}
 	
 	@RequestMapping("/cafe/private/delete")
@@ -65,5 +66,28 @@ public class CafeController {
 		cafeService.update(dto);
 		
 		return "cafe/private/update";
+	}
+	
+	@RequestMapping("/cafe/private/comment_insert")
+	public ModelAndView commentInsert(ModelAndView m, HttpServletRequest request, int ref_group) {
+		//새 댓글을 작성하고
+		cafeService.saveComment(request);
+		//보고 있던 글(ref_group 글번호) 자세히 보기로 다시 리다이렉트한다.
+		m.setViewName("redirect:/cafe/detail.do?num="+ref_group);
+		return m;
+	}
+	
+	@RequestMapping("/cafe/private/comment_delete")
+	public ModelAndView commentDelete(HttpServletRequest request, ModelAndView m, int ref_group) {
+		cafeService.deleteComment(request);
+		m.setViewName("redirect:/cafe/detail.do?num="+ref_group);
+		return m;
+	}
+	
+	@RequestMapping("/cafe/private/comment_update")
+	public ModelAndView updateComment(CafeCommentDto dto, ModelAndView m) {
+		cafeService.updateComment(dto);
+		m.setViewName("redirect:/cafe/detail.do?num="+dto.getRef_group());
+		return m;
 	}
 }
