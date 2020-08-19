@@ -1,10 +1,14 @@
 package com.gura.spring05.cafe.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.cafe.dto.CafeCommentDto;
@@ -24,8 +28,9 @@ public class CafeController {
 	}
 	
 	@RequestMapping("/cafe/detail")
-	public ModelAndView detail(HttpServletRequest request, ModelAndView m ) {
+	public ModelAndView detail(HttpServletRequest request, ModelAndView m) {
 		cafeService.getDetail(request);
+		
 		m.setViewName("cafe/detail");
 		return m;
 	}
@@ -84,10 +89,25 @@ public class CafeController {
 		return m;
 	}
 	
+	
+	//기존 수정 폼
+//	@RequestMapping("/cafe/private/comment_update")
+//	public ModelAndView updateComment(CafeCommentDto dto, ModelAndView m) {
+//		cafeService.updateComment(dto);
+//		m.setViewName("redirect:/cafe/detail.do?num="+dto.getRef_group());
+//		return m;
+//	}
+	
 	@RequestMapping("/cafe/private/comment_update")
-	public ModelAndView updateComment(CafeCommentDto dto, ModelAndView m) {
+	@ResponseBody
+	public Map<String, Object> updateComment(CafeCommentDto dto){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", dto.getNum());
+		map.put("content", dto.getContent());
+		
 		cafeService.updateComment(dto);
-		m.setViewName("redirect:/cafe/detail.do?num="+dto.getRef_group());
-		return m;
+		
+		return map;
 	}
+
 }

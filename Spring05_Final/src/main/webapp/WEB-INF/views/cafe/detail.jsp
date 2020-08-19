@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>/views/cafe/detail.jsp</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
+
 <style>
 	/* 글 내용을 출력할 div 에 적용할 css */
 	.contents{
@@ -150,10 +151,19 @@
 			<c:forEach var="tmp" items="${commentList }">
 				<c:choose>
 					<c:when test="${tmp.deleted eq 'yes' }">
-						<l1>삭제 된 댓글입니다.</l1>
+						<c:if test="${tmp.num ne tmp.comment_group }">
+							<li style="padding-left:100px; padding-top : 10px;">
+								<pre style="color:red;">삭제된 댓글입니다.</pre>
+							</li>
+						</c:if>
+						<c:if test="${tmp.num eq tmp.comment_group }">
+							<li style="padding-left:50px; padding-top : 10px;">
+								<pre style="color:red;">삭제된 댓글입니다.</pre>
+							</li>
+						</c:if>
 					</c:when>
 					<c:otherwise>
-						<li <c:if test="${tmp.num ne tmp.comment_group }">style="padding-left:50px"</c:if> >
+						<li id="comment${tmp.num }" <c:if test="${tmp.num ne tmp.comment_group }">style="padding-left:50px"</c:if> >
 							<c:if test="${tmp.num ne tmp.comment_group }">
 								<svg class="reply_icon" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 			  						<path fill-rule="evenodd" d="M10.146 5.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 9l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
@@ -181,7 +191,7 @@
 									<a href="javascript:" class="reply_link btn btn-outline-primary">답글</a>
 									<c:if test="${id eq tmp.writer}">
 <%-- 									updateComment(${tmp.num }); --%>
-										<a href="javascript:updateComment(${tmp.num });" class="update_comment btn btn-outline-info">수정</a>
+										<a href="javascript:" class="update_comment btn btn-outline-info">수정</a>
 										<a class="btn btn-outline-danger" href="javascript:deleteComment(${tmp.num });">삭제</a>
 									</c:if>
 								</dt>
@@ -215,7 +225,7 @@
 							</form>
 						</li>
 					</c:otherwise>
-				</c:choose>
+				</c:choose> 
 			
 				
 			</c:forEach>
@@ -233,16 +243,12 @@
 			<button type="submit">등록</button>
 		</form>
 	</div>
+	
 </div>
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/jquery-form/form@4.3.0/dist/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+<!-- ajax form plugin은 jquery를 의존하고 있으므로 jqeury를 로딩 시키고 명시해줘야한다. -->
 <script>
-	$(".comment-update-form").on("submit", function(){
-		var isUpdate = confirm("수정하시겠습니까?");
-		if(!isUpdate){
-			return false;
-		}
-	});
-	
 	$('.update_comment').on('click',function(){
 		$(this).parent().parent().parent().find('.comment-update-form').slideToggle();
 		if($(this).text() == '수정'){
@@ -251,6 +257,53 @@
 			$(this).text('수정');
 		}
 	});
+
+	//수정하기 ajax form pulgin으로 사용하기
+// 	$(".comment-update-form").ajaxForm(function(data){
+// 		console.log(data);
+// 		//li에 id를 부여하여 form을 닫게한다.
+// 		var selector = "#comment"+data.num;  //ex)"#comment6"
+// 		$(selector).find('.comment-update-form').slideUp();
+	
+// 		//pre 요소에 출력된 내용 수정하기
+// 		$(selector).find('pre').text(data.content);
+// 	});
+
+	$(".comment-update-form").on('submit',function(){
+		var isUpdate = confirm("수정하시겠습니까?");
+		
+		var method = $(this).attr('method');
+		var action = $(this).attr('action');
+		var query = $(this).serialize();
+		
+		if(isUpdate){
+			$.ajax({
+				method : method,
+				url : action,
+				data : query,
+				success : function(data){
+					//li에 id를 부여하여 form을 닫게한다.
+					var selector = "#comment"+data.num;
+					$(selector).find('.comment-update-form').slideUp();
+					//pre 요소에 출력된 내용 수정하기
+					$(selector).find('pre').text(data.content); 
+				}
+				
+			});
+		}
+		return false;
+	});
+	
+	
+	//기존 수정 폼
+// 	$(".comment-update-form").on("submit", function(){
+// 		var isUpdate = confirm("수정하시겠습니까?");
+// 		if(!isUpdate){
+// 			return false;
+// 		}
+// 	});
+	
+	
 	
 	function deleteComment(num){
 		var isDelete = confirm("삭제하시겠습니까?");
@@ -287,13 +340,6 @@
 		}
 	});
 
-
-	function deleteConfirm(){
-		var isDelete=confirm("이 글을 삭제 하시겠습니까?");
-		if(isDelete){
-			location.href="delete.do?num=${dto.num}";
-		}
-	}
 </script>
 </body>
 </html>

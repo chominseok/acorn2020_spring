@@ -17,4 +17,5 @@ public interface CafeCommentDao {
 	public void update(CafeCommentDto dto);
 	//하나의 정보
 	public CafeCommentDto getData(int num);
+
 }

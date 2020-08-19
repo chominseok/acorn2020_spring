@@ -11,9 +11,9 @@ public class CafeDto {
 	private int endRowNum;
 	private int prevNum;
 	private int nextNum;
+	
 	//디폴트 생성자
 	public CafeDto() {}
-	
 	
 	
 	public CafeDto(int num, String writer, String title, String content, int viewCount, String regdate, int startRowNum,

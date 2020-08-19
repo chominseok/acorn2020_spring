@@ -46,5 +46,4 @@ public class CafeCommentDaoImpl implements CafeCommentDao{
 		
 		return session.selectOne("cafeComment.getData", num);
 	}
-
 }

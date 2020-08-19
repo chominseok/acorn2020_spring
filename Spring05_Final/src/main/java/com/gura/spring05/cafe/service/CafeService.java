@@ -9,7 +9,11 @@ import com.gura.spring05.cafe.dto.CafeDto;
 
 public interface CafeService {
 	public void getList(HttpServletRequest request);
+	
+	
 	public void getDetail(HttpServletRequest request);
+	
+	
 	public void insert(CafeDto dto);
 	public void delete(HttpServletRequest request);
 	public void updateForm(CafeDto dto, ModelAndView m);
