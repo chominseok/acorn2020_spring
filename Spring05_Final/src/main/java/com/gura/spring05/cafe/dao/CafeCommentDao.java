@@ -6,7 +6,7 @@ import com.gura.spring05.cafe.dto.CafeCommentDto;
 
 public interface CafeCommentDao {
 	//댓글 목록 얻어오기
-	public List<CafeCommentDto> getList(int ref_group);
+	public List<CafeCommentDto> getList(CafeCommentDto dto);
 	//댓글 삭제
 	public void delete(int num);
 	//댓글 추가
@@ -17,5 +17,6 @@ public interface CafeCommentDao {
 	public void update(CafeCommentDto dto);
 	//하나의 정보
 	public CafeCommentDto getData(int num);
-
+	
+	public int getCount(int ref_group);
 }

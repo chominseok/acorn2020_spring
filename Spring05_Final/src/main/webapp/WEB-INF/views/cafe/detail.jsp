@@ -232,6 +232,30 @@
 		</ul>
 	</div>
 	
+<!-- 	bootstrap 기능 -->
+	<div class="clearfix"></div>  
+	
+	<div class="page-display">
+		<ul class="pagination pagination-sm">
+		<c:if test="${startPageNum ne 1 }">
+			<li class="page-item"><a class="page-link" href="detail.do?num=${dto.num}&pageNum=${startPageNum-1 }">Prev</a></li>
+		</c:if>
+		<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
+			<c:choose>
+				<c:when test="${i eq pageNum }">
+					<li class="page-item active"><a class="page-link" href="detail.do?num=${dto.num}&pageNum=${i }">${i }</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item"><a class="page-link" href="detail.do?num=${dto.num}&pageNum=${i }">${i }</a></li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${endPageNum lt totalPageCount }">
+			<li class="page-item"><a class="page-link" href="detail.do?num=${dto.num}&pageNum=${endPageNum+1 }">Next</a></li>
+		</c:if>
+		</ul>	
+	</div>
+	
 	<div class="comment_form">
 		<!-- 원글에 댓글을 작성하는 form -->
 		<form action="private/comment_insert.do" method="post">
@@ -243,7 +267,6 @@
 			<button type="submit">등록</button>
 		</form>
 	</div>
-	
 </div>
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/jquery-form/form@4.3.0/dist/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
@@ -269,6 +292,8 @@
 // 		$(selector).find('pre').text(data.content);
 // 	});
 
+	// ajaxSubmit은 실행 시 강제로 form 전송 (페이지 로딩 시 전송됨 > 안되게 하려면 조건 설정 ex)onclick)  <<<>>>
+	// ajaxForm은 form을 제출할 때 전송
 	$(".comment-update-form").on('submit',function(){
 		var isUpdate = confirm("수정하시겠습니까?");
 		
