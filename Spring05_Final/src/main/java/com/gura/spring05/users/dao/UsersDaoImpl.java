@@ -11,7 +11,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gura.spring05.users.dto.UsersDto;
-
+/*
+ * @Repository는 DB 관련 작업을 하다가 SQLException이 발생하는 경우 해당 Exception 대신에
+ * DataAccessException을 발생시킨다.
+ * 
+ * >> 따라서 DB 관련 작업을 하다가 발생하는 예외는 예외 컨트롤러에서 처리를 한다.
+ * */
 @Repository
 public class UsersDaoImpl implements UsersDao{
 	@Autowired

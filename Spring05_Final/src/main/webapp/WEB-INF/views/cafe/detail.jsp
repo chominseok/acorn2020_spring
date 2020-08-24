@@ -280,7 +280,15 @@
 			$(this).text('수정');
 		}
 	});
-
+	
+	function deleteConfirm(){
+		var isDelete=confirm("이 글을 삭제 하시겠습니까?");
+		if(isDelete){
+			location.href="${pageContext.request.contextPath}/cafe/private/delete.do?num=${dto.num}";
+			
+		}
+	}
+	
 	//수정하기 ajax form pulgin으로 사용하기
 // 	$(".comment-update-form").ajaxForm(function(data){
 // 		console.log(data);

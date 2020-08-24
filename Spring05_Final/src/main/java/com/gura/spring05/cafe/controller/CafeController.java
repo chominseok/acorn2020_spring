@@ -53,8 +53,8 @@ public class CafeController {
 	}
 	
 	@RequestMapping("/cafe/private/delete")
-	public String delete(HttpServletRequest request) {
-		cafeService.delete(request);
+	public String delete(int num, HttpServletRequest request) {
+		cafeService.delete(num, request);
 		return "cafe/private/delete";
 	}
 	

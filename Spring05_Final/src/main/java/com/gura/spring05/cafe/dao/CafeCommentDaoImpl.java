@@ -27,6 +27,7 @@ public class CafeCommentDaoImpl implements CafeCommentDao{
 
 	@Override
 	public void insert(CafeCommentDto dto) {
+		
 		session.insert("cafeComment.insert", dto);
 	}
 

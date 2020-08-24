@@ -161,12 +161,14 @@ public class FileServiceImpl implements FileService{
 		//1.삭제할 파일의 정보를 읽어온다.
 		FileDto dto = fileDao.getData(num);
 		//2.본인이 작성한 글이 아닌 경우 에러 처리를 한다.
-		String id = (String)request.getSession().getAttribute("id");
+		//String id = (String)request.getSession().getAttribute("id");
 		//세션으로 가져온 로그인 되어있는 아이디와 db에 있는 아이디가 일치하지 않는다면 exception을 발생시킨다.
 		// >>페이지 상에서는 삭제가 불가능 하지만 주소 치고 들어가면 가능하기 떄문에 (본인꺼는 지우기 가능 ㅎ)
-		if(!id.equals(dto.getWriter())) {
-			throw new NotDeleteException("가세요 ㅎㅎ");
-		}
+		//if(!id.equals(dto.getWriter())) {
+		//	throw new NotDeleteException("가세요 ㅎㅎ");
+		//}
+//		aspect로 대체합니다.
+		
 		
 		//파일 시스템에서 파일 삭제
 		String saveFileName = dto.getSaveFileName();
@@ -177,6 +179,4 @@ public class FileServiceImpl implements FileService{
 		//2.db에서 삭제
 		fileDao.delete(num);
 	}
-	
-	
 }

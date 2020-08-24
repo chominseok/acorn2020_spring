@@ -24,6 +24,7 @@ public class WritingAspect {
 		System.out.println("닷 사용한 pen을 마무리 해요.");
 	}
 	
+	
 	//before, after는 단독임, ex) 인자 전달 x
 }
 

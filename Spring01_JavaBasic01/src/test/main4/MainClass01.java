@@ -13,5 +13,6 @@ public class MainClass01 {
 		String result = encoder.encode(pwd2);
 		//결과 출력해보기
 		System.out.println(result);
+		
 	}
 }

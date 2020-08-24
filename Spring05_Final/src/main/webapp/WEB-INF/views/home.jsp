@@ -10,6 +10,7 @@
 <!-- web.xml의 설정으로 home.jsp는 page에 views에 위치하고 있는게 아니라
      최상위 경로에 위치하고 있따. -->
 </head>
+<!-- spring ioc , di , aop-->
 <body>
 	<div class="container">
 		<c:choose>

@@ -162,7 +162,7 @@ public class CafeServiceImpl  implements CafeService{
 		int totalPageCount=
 						(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
 		int pageNum=totalPageCount;
-		System.out.println("************* pageNum : "+pageNum);
+	
 		if(strPageNum!=null) {
 			pageNum=Integer.parseInt(strPageNum);
 		}
@@ -205,13 +205,14 @@ public class CafeServiceImpl  implements CafeService{
 	}
 
 	@Override
-	public void delete(HttpServletRequest request) {
-		int num = Integer.parseInt(request.getParameter("num"));
-		CafeDto dto = cafeDao.getData(num);
-		String id = (String)request.getSession().getAttribute("id");
-		if(!id.equals(dto.getWriter())) {
-			throw new NotDeleteException("가세요 ㅎㅎ");
-		}
+	public void delete(int num, HttpServletRequest request) {
+//		int num = Integer.parseInt(request.getParameter("num"));
+//		CafeDto dto = cafeDao.getData(num);
+//		String id = (String)request.getSession().getAttribute("id");
+//		if(!id.equals(dto.getWriter())) {
+//			throw new NotDeleteException("가세요 ㅎㅎ");
+//		}
+		//aspect로 대체합니다.
 
 		cafeDao.delete(num);
 	}
