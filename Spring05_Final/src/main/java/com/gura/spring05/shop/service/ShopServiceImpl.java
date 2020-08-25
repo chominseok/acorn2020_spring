@@ -1,5 +1,8 @@
 package com.gura.spring05.shop.service;
 
+import java.util.List;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.spring05.exception.NoDeliveryException;
 import com.gura.spring05.shop.dao.OrderDao;
 import com.gura.spring05.shop.dao.ShopDao;
 import com.gura.spring05.shop.dto.OrderDto;
@@ -21,7 +25,8 @@ public class ShopServiceImpl implements ShopService{
 	
 	@Override
 	public void getList(ModelAndView m) {
-		shopDao.getList();
+		List<ShopDto> list = shopDao.getList();
+		m.addObject("list", list);
 	}
 	
 	/*
@@ -41,16 +46,18 @@ public class ShopServiceImpl implements ShopService{
 	//@repository의 DataAccessExecption만이 트랜잭션에 영향을 받음
 	@Transactional  
 	@Override
-	public void buy(HttpServletRequest request, ModelAndView m) {
+	public void buy(HttpServletRequest req, ModelAndView m) {
 		//1.구입할 상품의 번호를 읽어온다.
-		int num = (int)request.getSession().getAttribute("num");
-		String id = (String)request.getSession().getAttribute("id");
+		int num = Integer.parseInt(req.getParameter("num"));
+		String id = (String)req.getSession().getAttribute("id");
 		//2.상품의 가격을 얻어온다.
 		int price = shopDao.getPrice(num);
+		System.out.println("**********num : "+ num);
+		System.out.println("**********id : "+ id);
+		System.out.println("**********price : "+price);
 		ShopDto shopDto = new ShopDto();
 		shopDto.setId(id);
-		//고객의 정보를 들고와야 되는거 아닌가????  아니면 가격을 들고온다는 전제하에
-		//다른 테이블의 dto는 안만드나?
+		shopDto.setPrice(price);	
 		
 		//3.상품의 가격만큼 계좌 잔액을 줄인다.
 		shopDao.minusMoney(shopDto);
@@ -60,10 +67,16 @@ public class ShopServiceImpl implements ShopService{
 		shopDao.minusCount(num);
 		//6.주문 테이블(배송)에 정보를 추가한다.
 		OrderDto orderDto = new OrderDto();
-		//orderDto.setNum(시퀀스로 가져오기);
 		orderDto.setId(id);
 		orderDto.setCode(num);
-		//orderDto.setAddr(받아온 주소 넣기);
-		//orderDao.addOrder(dto);
+		orderDto.setAddr("강남구 삼원빌딩 5층");
+		Random ran = new Random();
+		int ranNum = ran.nextInt(3);
+		if(ranNum == 0) {
+			throw new NoDeliveryException("배송 가능 지역이 아닙니다.");
+		}
+		
+		
+	    orderDao.addOrder(orderDto);
 	}
 }

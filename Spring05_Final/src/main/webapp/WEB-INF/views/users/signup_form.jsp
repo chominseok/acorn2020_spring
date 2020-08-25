@@ -13,7 +13,7 @@
 		<h1>회원 가입 폼 입니다.</h1>
 		<form action="signup.do" method="post" id="myForm">
 			<div class="form-group">
-<!-- 				form-group 안에서 invalid-feedback class를 가지고 있으면, 
+<!-- 				form-group 안에서 invalid-feedback class를 가지고 있고, 
 					한 요소에 is-valid or is-invliad를 쓰면 display none에서 block로 바뀜		-->
 				<label for="id">아이디</label>
 				<input class="form-control" type="text" name="id" id="id"/>

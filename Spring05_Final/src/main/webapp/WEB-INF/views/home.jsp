@@ -28,6 +28,9 @@
 		<ul>
 			<li><a href="file/list.do">자료실 목록 보기</a></li>
 			<li><a href="cafe/list.do">카페 목록 보기</a></li>
+			<li><a href="shop/list.do">상품 목록 보기</a></li>
+			<li><a href="angularjs/test01.jsp">angular test01</a></li>
+			<li><a href="angularjs/test02.jsp">angular test02</a></li>
 		</ul>
 	</div>
 </body>

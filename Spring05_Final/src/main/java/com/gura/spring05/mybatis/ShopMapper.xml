@@ -15,21 +15,19 @@
 	
 	<update id="minusCount" parameterType="int">
 		UPDATE shop
-		SET remainCount = #{remainCount} - 1
+		SET remainCount = remainCount - 1
 		WHERE num = #{num}
 	</update>
 	
-	<update id="minusMoney" parameterType="int">
+	<update id="minusMoney" parameterType="shopDto">
 		UPDATE client_account 
-		SET money = #{money} - (SELECT price FROM shop
-								WHERE num = #{num})
+		SET money = money - #{price}
 		WHERE id = #{id}
 	</update>
 	
 	<update id="plusPoint" parameterType="shopDto">
 		UPDATE client_account 
-		SET point = (SELECT price FROM shop
-					WHERE num = #{num}) * 0.1
+		SET point = point + #{price} * 0.1
 		WHERE id = #{id}
 	</update>
 	
@@ -37,6 +35,6 @@
 		INSERT INTO client_order
 		(num, id, code, addr)
 		VALUES
-		(#{num}, #{id}, #{code}, #{addr})
+		(client_order_seq.NEXTVAL, #{id}, #{code}, #{addr})
 	</insert>
 </mapper>
