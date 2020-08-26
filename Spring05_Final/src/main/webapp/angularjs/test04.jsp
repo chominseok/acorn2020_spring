@@ -15,10 +15,10 @@
 		<h1>form 검증</h1>
 		<!-- novalidate > 웹브라우저에서 자체 유효성 검증을 하지 못하도록 하는 설정 -->
 		<form action="insert.jsp" method="post" name="myForm" novalidate>
-		<!-- 입력한 문자열을 id 라는 모델명으로 관리, 반드시 입력해야한다. -->
+		<!-- 입력한 문자열을 id 라는 모델명으로 관리,ng-required : 반드시 값이 있어야 한다.. -->
 			<input type="text" name="id" ng-model="id" ng-required="true"/>
 			<p ng-show="myForm.id.$invalid && myForm.id.$dirty" style="color : red;">아이디는 반드시 입력하세요오</p>
-			<p ng-hide="myForm.id.$valid || myForm.id.$pristine" style="color : red;">아이디를 입력하세요</p>
+			<p ng-hide="myForm.id.$valid || myForm.id.$pristine" style="color : red;s">아이디를 입력하세요</p>
 			<button ng-disabled="myForm.id.$invalid">제출</button>
 		</form>
 		<p>입력한 아이디 : <strong>{{id}}</strong></p>

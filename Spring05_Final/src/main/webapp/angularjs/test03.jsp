@@ -16,7 +16,7 @@
 		<input type="text" ng-model="b""/>
 		<button class="btn btn-primary">버튼1</button>
 		<button class="btn {{a}}">버튼2</button>
-		<button class="{{b}}">버튼3</button>
+		<button class="btn {{b}}">버튼3</button>
 		<button ng-class="['btn','btn-primary']">버튼4</button>
 		<button ng-class="{'btn':true,'btn-primary':true}">버튼5</button>
 		<br>

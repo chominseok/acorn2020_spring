@@ -23,7 +23,7 @@
 	<button id="bt">증가</button>
 	<button id="min">감소</button>
 	<button id="reset">리셋</button>
-	<p id="pt"></p>	
+	<p id="pt">0</p>	
 <script>
 	var idx = 0;
 	$('#bt').on('click',function(){
