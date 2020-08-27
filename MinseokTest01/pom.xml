@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gura</groupId>
-	<artifactId>spring05</artifactId>
-	<name>Spring05_Final</name>
+	<groupId>minseok.test</groupId>
+	<artifactId>test01</artifactId>
+	<name>MinseokTest01</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -140,7 +140,6 @@
 		    <artifactId>spring-tx</artifactId>
 		    <version>4.0.0.RELEASE</version>
 		</dependency>
-			
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>

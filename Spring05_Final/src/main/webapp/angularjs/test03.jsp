@@ -13,7 +13,7 @@
 <body ng-app>
 	<div class="container">
 		<h1 ng-init="a = 'btn-primary'">클래스 속성 조작하기</h1>
-		<input type="text" ng-model="b""/>
+		<input type="text" ng-model="b"/>
 		<button class="btn btn-primary">버튼1</button>
 		<button class="btn {{a}}">버튼2</button>
 		<button class="btn {{b}}">버튼3</button>

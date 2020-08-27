@@ -13,7 +13,7 @@
 	myApp.controller("one",function($scope, $http){
 		//폼에 입력한 내용을 담을 모델
 		$scope.formData = {};
-		
+		 
 		$scope.send = function(){
 			$http({
 				method:"post",
