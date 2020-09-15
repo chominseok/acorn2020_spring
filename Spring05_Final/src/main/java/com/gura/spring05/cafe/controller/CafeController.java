@@ -1,6 +1,7 @@
 package com.gura.spring05.cafe.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.spring05.cafe.dao.CafeDao;
 import com.gura.spring05.cafe.dto.CafeCommentDto;
 import com.gura.spring05.cafe.dto.CafeDto;
 import com.gura.spring05.cafe.service.CafeService;
@@ -109,5 +111,22 @@ public class CafeController {
 		
 		return map;
 	}
-
+	
+	@RequestMapping("/cafe/ajax_list")
+	@ResponseBody
+	public Map<String, Object> ajaxList(HttpServletRequest request){
+		
+		return cafeService.getList2(request);
+	}
+	
+	// angular js 테스트용 
+	@Autowired
+	private CafeDao cafeDao;
+	
+	@RequestMapping("/cafe/ajax_detail")
+	@ResponseBody
+	public CafeDto ajaxDetail(int num) {
+		
+		return cafeDao.getData(num);
+	}
 }
